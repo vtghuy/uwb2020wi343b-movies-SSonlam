@@ -29,12 +29,14 @@ public:
     BSTree();
     ~BSTree(); // calls makeEmpty which deallocates all memory
    //insert object into the tree, parameter holds pointer to object to insert
-    bool insert(Movie*); //insert client pointers binary tree style
+    bool insert(Movie*& input); //insert client pointers binary tree style
     void buildTree(ifstream&); //calls insert to build the tree
 
     // retrieve function, first parameter is id to retrieve
     // second parameter holds pointer to found object, nullptr if not found
-    bool retrieve(const int inputId, Movie*&) const;
+    bool retrieve(const string inputName, Movie *&ptrHolder) const;
+    bool retrieveInt(const int inputYear, const int inputMonth, string ActorFirst, string ActorLast, Movie*& ptrHolder) const;
+    bool retrieveDrama(const string inputDirector, const string inputTitle, Movie*& ptrHolder) const;
     bool isEmpty() const; //returns true if tree is empty
     void display() const; //displays the contents of a tree to cout  
     void makeEmpty(); //deletes every node of the tree

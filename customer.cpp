@@ -26,3 +26,17 @@ ostream& operator<<(ostream& os, const Customer& customer) {
 int Customer::GetID() {
     return CustomerID;
 }
+
+void Customer::addToHistory(char CommandType, Movie* tempMovie) {
+    string line;
+    switch (CommandType) {
+    case 'B':
+        line = "Borrowed: " + tempMovie->getTitle() + " " + tempMovie->getDirector() + " " + tempMovie->getActorFirst() + " " + tempMovie->getActorLast();
+        break;
+    case 'R':
+        line = "Returned: " + tempMovie->getTitle() + " " + tempMovie->getDirector() + " " + tempMovie->getActorFirst() + " " + tempMovie->getActorLast();
+    default:
+        break;
+    }
+    History.push_back(line);
+}

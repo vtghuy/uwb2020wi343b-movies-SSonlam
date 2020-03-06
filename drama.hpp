@@ -26,28 +26,6 @@ public:
         }
     }
 
-    bool operator > (Movie* comparedMovie) {
-        if (getReleaseYear() < comparedMovie->getReleaseYear()) {
-            return true;
-        }
-
-        else if (getReleaseYear() == comparedMovie->getReleaseYear()) {
-            if (getReleaseMonth() < comparedMovie->getReleaseMonth()) {
-                return true;
-            }
-            else if (getReleaseMonth() == comparedMovie->getReleaseYear()) {
-                if (getActorFirst().compare(comparedMovie->getActorFirst()) < 0) {
-                    return true;
-                }
-            }
-        }
-
-        else {
-            return false;
-        }
-    }
-
-
     bool read(istream &is) {
         char DiscardComma;
         is >> DiscardComma;

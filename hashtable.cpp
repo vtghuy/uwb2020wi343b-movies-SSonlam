@@ -25,7 +25,7 @@ void HashTable::add(Customer *AddingCustomer) {
 //retrieves customer pointer to perform commands on
 Customer* HashTable::retrieve(int ID) {
     if (!doesCustomerExist(ID)) { 
-        cout << "Customer does not exist, retrieval failed" << endl;
+        cout << "Customer does not exist, retrieval failed on: " << ID << endl;
         return nullptr; 
     }
     //list iterator 
@@ -34,7 +34,6 @@ Customer* HashTable::retrieve(int ID) {
     for (Itr = Table[index].begin(); Itr != Table[index].end(); Itr++) {
         Customer* temp = *Itr;
         if (ID == temp->GetID()) {
-            cout << *temp << endl;
             return temp;
         }
     }

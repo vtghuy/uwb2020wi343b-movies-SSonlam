@@ -1,8 +1,6 @@
 #ifndef CLASSIC_H
 #define CLASSIC_H
 
-//#include "movie.h"
-
 class Classic : public Movie
 {
 public:
@@ -12,9 +10,6 @@ public:
         return ReleaseMonth;
     }
 
-    string getActorFirst() {
-        return MajorActorFirst;
-    }
 
     bool read(istream &is) {
         char DiscardComma;
@@ -33,7 +28,6 @@ public:
         }
 
         else if (getReleaseYear() == comparedMovie.getReleaseYear()) {
-            //cout << "wtf" << endl;
             if (getReleaseMonth() < comparedMovie.getReleaseMonth()) {
                 return true;
             }
@@ -52,27 +46,12 @@ public:
         }
     }
 
-    bool operator > (Movie* comparedMovie) {
-        if (getReleaseYear() < comparedMovie->getReleaseYear()) {
-            return false;
-        }
-
-        else if (getReleaseYear() == comparedMovie->getReleaseYear()) {
-            if (getReleaseMonth() < comparedMovie->getReleaseMonth()) {
-                return false;
-            }
-            else if (getReleaseMonth() == comparedMovie->getReleaseYear()) {
-                if (getActorFirst().compare(comparedMovie->getActorFirst()) < 0) {
-                    return false;
-                }
-            }
-        }
-
-        else {
-            return true;
-        }
+    string getActorFirst() {
+        return MajorActorFirst;
     }
-
+    string getActorLast() {
+        return MajorActorLast;
+    }
 
     ostream &printer(ostream& os) const override {
         os << "Classic: " << Stock << " " << Director << " " << Title << " " << MajorActorFirst << " " << MajorActorLast << " " << ReleaseMonth << " " << ReleaseYear;

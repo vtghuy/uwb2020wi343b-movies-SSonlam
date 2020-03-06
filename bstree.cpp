@@ -14,12 +14,11 @@ BSTree::~BSTree()
 //function to insert a Client* into the binary tree, sets first value
 //as the root then sorts future data going to the left subtree is value
 //is smaller, and to the right if value is higher
-bool BSTree::insert(Movie* input) {
+bool BSTree::insert(Movie*& input) {
     Node* ptr = new Node;
     if (ptr == nullptr) return false;            // out of memory
     ptr->data = input;
     ptr->left = ptr->right = nullptr;
-
     if (isEmpty()) { //empty tree sets root to first client pointer
         root = ptr;
     }
@@ -60,32 +59,6 @@ bool BSTree::isEmpty() const {
         return false;
     }
 }
-/*
-//----------------------------------------------------------------------------
-//builds binary tree by first building Clients, then inserting into tree
-void BSTree::buildTree(ifstream& infile) {
-    string lastName; //temp holder to read in last name
-    string firstName; //temp holder to read in first name
-    int idNumber; //temp holder to read in id number
-    int bankAccounts[10]; //temp holder to hold 0-9 balances
-    while (!infile.eof()) {
-        //read in data from file assuming correct format
-        while (infile >> lastName >> firstName >> idNumber) {
-            //loop to fill bankAccounts array (0-9)
-
-            for (int i = 0; i < 10; i++) {
-                infile >> bankAccounts[i];
-            }
-
-            //builds client with constructor then insert into tree
-            Movie *tempClient = new Movie(lastName, firstName,
-                idNumber, bankAccounts);
-            insert(tempClient);
-        }
-    }
-}
-
-*/
 
 //----------------------------------------------------------------------------
 //recursively prints all nodes of the binary tree
@@ -113,17 +86,17 @@ void BSTree::displayHelper(Node* ptr)const {
 }
 
 
-/*
+
 //----------------------------------------------------------------------------
 //function to retrieve reference of client pointer, stores to second param
-bool BSTree::retrieve(int inputId, Movie*& ptrHolder) const {
+bool BSTree::retrieve(const string inputName, Movie*& ptrHolder) const {
     //check to see empty tree
     if (root == nullptr) {
         cout << "Cannot perform retrieve, tree is empty" << endl;
         return false;
     }//calls client.getId to match ids
     //check to see if root is matching client
-    else if (inputId == root->data->getId()) {
+    else if (inputName == root->data->getTitle()) {
         ptrHolder = root->data;
         return true;
     }
@@ -131,12 +104,12 @@ bool BSTree::retrieve(int inputId, Movie*& ptrHolder) const {
     Node* current = root; // starts current at root
     //iterates through tree to try to find client
     while (current != nullptr) {
-        if (inputId == current->data->getId()) {
+        if (inputName.compare(current->data->getTitle()) == 0) {
             ptrHolder = current->data;
             return true;
         }
 
-        if (inputId < current->data->getId()) {
+        if (inputName.compare(current->data->getTitle()) < 0) {
             current = current->left;               // one step left
         }
         else {
@@ -147,7 +120,100 @@ bool BSTree::retrieve(int inputId, Movie*& ptrHolder) const {
     //false if cannot find after iteration of tree
     return false;
 }
-*/
+
+bool BSTree::retrieveInt(const int inputYear, const int inputMonth, string ActorFirst, string ActorLast, Movie*& ptrHolder) const {
+    //check to see empty tree
+    if (root == nullptr) {
+        cout << "Cannot perform retrieve, tree is empty" << endl;
+        return false;
+    }//calls client.getId to match ids
+    //check to see if root is matching client
+    else if (root->data->getActorFirst().compare(ActorFirst) == 0 && root->data->getActorLast().compare(ActorLast) == 0 &&
+        root->data->getReleaseYear() == inputYear && root->data->getReleaseMonth() == inputMonth) {
+        ptrHolder = root->data;
+        return true;
+    }
+    Node* current = root; // starts current at root
+    //iterates through tree to try to find client
+    while (current != nullptr) {
+        if (current->data->getActorFirst().compare(ActorFirst) == 0 && current->data->getActorLast().compare(ActorLast) == 0 &&
+            current->data->getReleaseYear() == inputYear && current->data->getReleaseMonth() == inputMonth) {
+
+            ptrHolder = current->data;
+            return true;
+        }
+
+        if (inputYear < current->data->getReleaseYear()) {
+            current = current->left;               // one step left
+        }
+
+
+        else if (inputYear == current->data->getReleaseYear()) {
+            if (inputMonth < current->data->getReleaseMonth()) {
+                current = current->left;
+            }
+            else {
+                current = current->right;
+            }
+        }
+
+
+        else {
+            current = current->right;              // one step right
+        }
+
+    }
+    //false if cannot find after iteration of tree
+    ptrHolder = nullptr;
+    return false;
+}
+
+//----------------------------------------------------------------------------
+//function to retrieve reference of client pointer, stores to second param
+bool BSTree::retrieveDrama(const string inputDirector, const string inputTitle, Movie*& ptrHolder) const {
+    //check to see empty tree
+    if (root == nullptr) {
+        cout << "Cannot perform retrieve, tree is empty" << endl;
+        return false;
+    }//calls client.getId to match ids
+    //check to see if root is matching client
+    else if (inputDirector.compare(root->data->getDirector()) == 0 && inputTitle.compare(root->data->getTitle()) == 0) {
+        ptrHolder = root->data;
+        return true;
+    }
+
+    Node* current = root; // starts current at root
+    //iterates through tree to try to find client
+    while (current != nullptr) {
+        if (inputDirector.compare(current->data->getDirector()) == 0 && inputTitle.compare(current->data->getTitle()) == 0) {
+            ptrHolder = current->data;
+            return true;
+        }
+
+        if (inputDirector.compare(current->data->getDirector()) < 0) {
+            current = current->left;               // one step left
+        }
+
+
+        else if (inputDirector.compare(current->data->getDirector()) == 0) {
+            if (inputTitle.compare(current->data->getTitle()) < 0) {
+                current = current->left;
+            }
+            else {
+                current = current->right;
+            }
+        }
+
+
+        else {
+            current = current->right;              // one step right
+        }
+
+    }
+    //false if cannot find after iteration of tree
+    return false;
+}
+
 
 //----------------------------------------------------------------------------
 //uses recursion to delete every node of the tree

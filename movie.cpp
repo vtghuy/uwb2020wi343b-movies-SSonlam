@@ -37,3 +37,24 @@ string Movie::getTitle() {
 string Movie::getDirector() {
     return Director;
 }
+
+bool Movie::stockBorrowed() {
+    if (0 < Stock) {
+        --Stock;
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void Movie::stockReturned() {
+        ++Stock;
+}
+
+string Movie::getActorFirst() {
+    return MajorActorFirst;
+}
+string Movie::getActorLast() {
+    return MajorActorLast;
+}

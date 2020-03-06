@@ -37,29 +37,6 @@ public:
         }
     }
 
-
-    bool operator > (Movie* comparedMovie) {
-        if (getReleaseYear() < comparedMovie->getReleaseYear()) {
-            return false;
-        }
-
-        else if (getReleaseYear() == comparedMovie->getReleaseYear()) {
-            if (getReleaseMonth() < comparedMovie->getReleaseMonth()) {
-                return false;
-            }
-            else if (getReleaseMonth() == comparedMovie->getReleaseYear()) {
-                if (getActorFirst().compare(comparedMovie->getActorFirst()) < 0) {
-                    return false;
-                }
-            }
-        }
-
-        else {
-            return true;
-        }
-    }
-
-
     ostream &printer(ostream& os) const override {
         os << "Comedy: " << Stock << " " << Director << " " << Title << " " << ReleaseYear;
         return os;

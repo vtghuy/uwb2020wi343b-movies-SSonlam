@@ -17,9 +17,9 @@ public:
     CommandFactory() {}
     //  ~MovieFactory() { for (const auto &m : Movies) delete m; };
 
-    Command *create(char MovieType) {
+    Command *create(char commandType) {
         // Movie *Movies;
-        switch (MovieType) {
+        switch (commandType) {
         case 'B': {
             Commands = new Borrow();
             break;
@@ -37,7 +37,7 @@ public:
             break;
         }
         default: {
-            cout << "invalid movie type: " << MovieType << endl;
+            cout << "invalid command type: " << commandType << endl;
             return nullptr;
         }
 

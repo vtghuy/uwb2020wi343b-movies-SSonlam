@@ -2,6 +2,8 @@
 #define STORE_H
 
 #include "bstree.h"
+#include "command.h"
+#include "commandfactory.hpp"
 #include "customer.h"
 #include "movie.h"
 #include "moviefactory.hpp"
@@ -26,7 +28,8 @@ public:
 private:
     HashTable CustomerTable;
     MovieFactory Factory;
-    map<char, BSTree> MovieMap;
+    CommandFactory CFactory;
+    map<char, BSTree*> Inventory;
 };
 #endif
 
